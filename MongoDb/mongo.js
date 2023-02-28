@@ -19,15 +19,10 @@ const characterSchema = new mongoose.Schema({
 });
 // Create a Character model from the schema
 const Character = mongoose.model('Character', characterSchema);
-async function getInfo(userId){
+async function getInfo(userid){
   try {
-     const characters = await Character.find({ id: userId });
-    const characterIndex = characterNumber - 1;
-
-    if (characterIndex < 0 || characterIndex >= characters.length) {
-      return null;
-    }
-    const character = characters[characterIndex];
+     const characters = await Character.find({ id: userid });
+    const character = characters;
     const characterData = {
       username: character.username,
       name: character.name,
@@ -85,6 +80,25 @@ async function updateSelectedCharacter(userId, characterName) {
     console.error(`Error updating selected character: ${error.message}`);
   }
 }
+async function getCurrencyData(userId) {
+  try {
+    await mongoose.connect(process.env.URI);
+    mongoose.set('strictQuery', true);
+
+    const characters = await Character.find({ id: userId });
+
+    const currencyData = {
+      coins: characters[0].coins,
+      shards: characters[0].shards,
+      redeems: characters[0].redeems,
+    };
+    return currencyData;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
 module.exports = {
   getCharacterData: async function(userId) {
     try {
@@ -150,5 +164,6 @@ module.exports = {
   },
   updateSelectedCharacter,
   getCharacterDataByNumber,
-  getInfo
+  getInfo,
+   getCurrencyData
 };
