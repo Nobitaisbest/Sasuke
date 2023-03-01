@@ -1,8 +1,8 @@
 const { getCharacterDataByNumber } =require('../../MongoDb/mongo');
 const {ApplicationCommandType, ApplicationCommandOptionType,  EmbedBuilder} = require('discord.js')
 module.exports = {
-	name: 'info',
-	description: "info",
+	name: 'character-info-by-number',
+	description: "character info",
 	cooldown: 3000,
     options:[{
 name: "number",
