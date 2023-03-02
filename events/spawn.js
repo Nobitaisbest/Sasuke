@@ -3,7 +3,7 @@ const client = require("..")
 const mongoose = require('mongoose');
 const Jimp = require('jimp');
 
-mongoose.connect('mongodb+srv://18:18@sample.xprpqqd.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('link', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 module.exports = 
 setInterval(async () => {
