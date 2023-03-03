@@ -12,7 +12,7 @@ module.exports = {
   cooldown: 3000,
   run: async (client, interaction) => {
     try {
-      interaction.reply("Getting data");
+     
       const user = interaction.user.id;
       let data = await getCharacterData(user);
       const emojis = ['<:uzumaki:1076361276739039282>', '<:sasuke:1076363943934701618>', '🍟', '🥤', '🍺', '🥨'];
@@ -27,8 +27,8 @@ module.exports = {
         .setThumbnail(interaction.user.displayAvatarURL())
         .setFields({ name: 'Characters', value: `\n${names}\n` });
 
-      await sleep(1000);
-      await interaction.editReply({ embeds: [embed] });
+      
+      await interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);
       interaction.editReply("You dont have any data\n pls use /register to register");

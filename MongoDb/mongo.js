@@ -9,12 +9,12 @@ const characterSchema = new mongoose.Schema({
   username: String,
   name: String,
   id: String,
-  xp: { type: Number, default: 0 },
-  level: Number,
+  xp: { type: Number, default: 100 },
+  level: { type: Number, default: 1 },
   Selected_character: { type: Number, default: 1 },
   Selected_character_moves: String,
-  coins: { type: Number, default: 100 },
-  shards: { type: Number, default: 0 },
+  coins: { type: Number, default: 1000 },
+  shards: { type: Number, default: 50 },
   redeems: { type: Number, default: 0 }
 });
 // Create a Character model from the schema
@@ -82,8 +82,7 @@ async function updateSelectedCharacter(userId, characterName) {
 }
 async function getCurrencyData(userId) {
   try {
-    await mongoose.connect(process.env.URI);
-    mongoose.set('strictQuery', true);
+    
 
     const characters = await Character.find({ id: userId });
 
@@ -102,8 +101,7 @@ async function getCurrencyData(userId) {
 module.exports = {
   getCharacterData: async function(userId) {
     try {
-      await mongoose.connect(process.env.URI);
-      mongoose.set('strictQuery', true);
+    
 
       const characters = await Character.find({ id: userId });
 
@@ -129,11 +127,11 @@ module.exports = {
     }
   },
   addchar: async function(user, user_id) {
-    mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-      .then(() => {
-        const character = new Character({ username: user, name: 'Naruto', id: user_id });
+   console.log("hi")
+    // mongoose.connect(url)
+        const character = new Character({ username: user, name: 'Naruto', id: user_id , level: 1 });
         character.save()
-          .then(() => {
+        
             console.log('Character saved successfully');
             mongoose.disconnect();
             // Write data to file
@@ -145,15 +143,10 @@ module.exports = {
               if (err) throw err;
               console.log('Data written to file');
             });
-          })
-          .catch((err) => {
-            console.error('Error saving character:', err);
-            mongoose.disconnect();
-          });
-      })
-      .catch((err) => {
-        console.error('Error connecting to MongoDB:', err);
-      });
+          
+         
+      
+     
   },
   deleteDoc: async function(user) {
     Character.deleteMany({ id: user }).then(function() {
@@ -165,5 +158,5 @@ module.exports = {
   updateSelectedCharacter,
   getCharacterDataByNumber,
   getInfo,
-   getCurrencyData
+  getCurrencyData
 };
